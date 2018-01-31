@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/01/nuspec.xsd">
+    <metadata minClientVersion="3.5.0">
+        <id>MPSC.PlenoSoft.Office.PlenoExcel</id>
+        <version>$version$</version>
+        <title>Pleno Excel @ Mercado Pleno Soluções em Computação</title>
+        <authors>Bruno N. Fernandes</authors>
+        <owners>software@mercadopleno.com.br</owners>
+        <licenseUrl>http://www.mercadopleno.com.br</licenseUrl>
+        <projectUrl>http://www.mercadopleno.com.br</projectUrl>
+        <iconUrl>http://www.mercadopleno.com.br/imgs/MPSC.PlenoSoft.Office.PlenoExcel.png</iconUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Pleno Excel é um façade para o DocumentFormat.OpenXML muito simples de utilizar. 
+<![CDATA[
+[TestClass]
+public class MPSC.PlenoSoft.Office.PlenoExcel.Testes
+{
+	[TestMethod]
+	public void Exemplo_De_Como_Gerar_Uma_Planilha_Excel()
+	{
+		var arquivoExcel = new FileInfo(@"C:\Temp\PlenoExcel.xlsx");
+		var plenoExcel = new PlenoExcel(arquivoExcel, Modo.Padrao);
+
+		var plan1 = plenoExcel["Plan1"];
+
+		plan1.Escrever("A", 1, "Numero 1", Style.Header);
+		plan1.Escrever("B", 1, "Número 2", Style.Header);
+		plan1.Escrever("C", 1, "Soma", Style.Header);
+
+		plan1.Escrever("A", 2, 6, Style.Geral);
+		plan1.Escrever("B", 2, 4, Style.Geral);
+		plan1.Escrever("C", 2, "=SUM(A2:B2)", Style.Geral);
+
+		plenoExcel.Salvar();
+		plenoExcel.Fechar();
+	}
+
+	[TestMethod] 
+	public void Exemplo_De_Como_Gerar_Uma_Planilha_Excel_A_Partir_De_Uma_Lista_De_DTOs()
+	{
+		var arquivoExcel = new FileInfo(@"C:\Temp\PlenoExcel.xlsx");
+		var plenoExcel = new PlenoExcel(arquivoExcel, Modo.Padrao | Modo.ApagarSeExistir);
+		plenoExcel.Exportar(listaDTO);
+		plenoExcel.Fechar();
+	}
+}
+]]>
+		</description>
+        <summary>Um façade para o DocumentFormat.OpenXML muito simples de utilizar.</summary>
+        <releaseNotes>
+			(Atual)
+			2017/10/20 - 1.0.0.114 -> Possibilitar o carregamento automático da configuração através de arquivo XML;
+			2017/10/18 - 1.0.0.113 -> Correção do posicionamento do cabeçalho;
+			2017/09/14 - 1.0.0.112 -> Implementando a configuração através de recursos externos da aplicação;
+			2017/08/17 - 1.0.0.111 -> Suporte à Backup durante a manipulação de arquivos;
+			2017/08/07 - 1.0.0.110 -> Configuração de campos através de Atributos no DTO;
+			2017/08/06 - 1.0.0.109 -> Exportação de Listas de um DTO como sheets da planilha;
+			2017/08/05 - 1.0.0.108 -> Versão Inicial do façade para o DocumentFormat.OpenXML muito simples de utilizar;
+		</releaseNotes>
+        <copyright>Mercado Pleno Soluções em Computação</copyright>
+        <language>pt-BR</language>
+        <tags>Document Format Open Xml Office Excel Planilha Pleno Soft DocumentFormat OpenXml</tags>
+        <dependencies>
+            <dependency id="DocumentFormat.OpenXml" version="2.7.2" />
+        </dependencies>
+        <frameworkAssemblies>
+            <frameworkAssembly assemblyName="System" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Drawing" targetFramework="" />
+            <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+            <frameworkAssembly assemblyName="WindowsBase" targetFramework="" />
+        </frameworkAssemblies>
+    </metadata>
+    <files>
+        <file src="..\..\Bin\MPSC.PlenoSoft.Office.dll" target="lib\net\" />
+    </files>
+</package>
