@@ -7,7 +7,7 @@
         <authors>Bruno N. Fernandes</authors>
         <owners>software@mercadopleno.com.br</owners>
         <licenseUrl>http://www.mercadopleno.com.br</licenseUrl>
-        <projectUrl>http://www.mercadopleno.com.br</projectUrl>
+        <projectUrl>https://github.com/Bruno-N-Fernandes/MPSC.PlenoSoft.Office.PlenoExcel</projectUrl>
         <iconUrl>http://www.mercadopleno.com.br/imgs/MPSC.PlenoSoft.Office.PlenoExcel.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Pleno Excel é um façade para o DocumentFormat.OpenXML muito simples de utilizar. 
@@ -23,7 +23,7 @@ public class MPSC.PlenoSoft.Office.PlenoExcel.Testes
 
 		var plan1 = plenoExcel["Plan1"];
 
-		plan1.Escrever("A", 1, "Numero 1", Style.Header);
+		plan1.Escrever("A", 1, "Número 1", Style.Header);
 		plan1.Escrever("B", 1, "Número 2", Style.Header);
 		plan1.Escrever("C", 1, "Soma", Style.Header);
 
@@ -49,6 +49,7 @@ public class MPSC.PlenoSoft.Office.PlenoExcel.Testes
         <summary>Um façade para o DocumentFormat.OpenXML muito simples de utilizar.</summary>
         <releaseNotes>
 			(Atual)
+			2018/02/02 - 1.0.0.115 -> Correção do defeito de exportar campo do tipo Decimal;
 			2017/10/20 - 1.0.0.114 -> Possibilitar o carregamento automático da configuração através de arquivo XML;
 			2017/10/18 - 1.0.0.113 -> Correção do posicionamento do cabeçalho;
 			2017/09/14 - 1.0.0.112 -> Implementando a configuração através de recursos externos da aplicação;

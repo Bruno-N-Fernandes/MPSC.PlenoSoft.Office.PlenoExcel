@@ -22,9 +22,9 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 [assembly: Guid("7539D6F3-9829-4D41-9D2D-1DAD24A5C63A")]
 
-[assembly: AssemblyVersion("1.0.0.114")]
-[assembly: AssemblyFileVersion("17.19.12.685")]
-[assembly: AssemblyInformationalVersion("1.0.2017.1020")]
+[assembly: AssemblyVersion("1.0.0.115")]
+[assembly: AssemblyFileVersion("16.39.12.685")]
+[assembly: AssemblyInformationalVersion("1.0.2018.0202")]
 
 
 public class VersaoDoAssembly

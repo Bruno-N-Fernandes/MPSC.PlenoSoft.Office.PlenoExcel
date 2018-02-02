@@ -8,12 +8,14 @@ namespace MPSC.PlenoSoft.Office.Planilhas.Celulas
 {
 	public class NumberCell : Cell
 	{
-		private static string Format(Object numero)
+		private static readonly CultureInfo en_US = CultureInfo.GetCultureInfo("en-US");
+
+		private static String Format(Object numero)
 		{
-			if ((numero == null) || Double.IsNaN((Double)numero))
+			if ((numero == null) || ((numero is Double) && Double.IsNaN((Double)numero)))
 				return String.Empty;
 
-			return String.Format(CultureInfo.GetCultureInfo("en-US"), "{0:#0.0000000000}", numero);
+			return String.Format(en_US, "{0:#0.0000000000}", numero);
 		}
 
 		private NumberCell(Celula celula, String numero, UInt32Value styleIndex)
