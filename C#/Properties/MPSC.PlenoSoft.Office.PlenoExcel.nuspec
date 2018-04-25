@@ -12,36 +12,41 @@
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>Pleno Excel é um façade para o DocumentFormat.OpenXML muito simples de utilizar. 
 <![CDATA[
-[TestClass]
-public class MPSC.PlenoSoft.Office.PlenoExcel.Testes
+
+
+namespace MPSC.PlenoSoft.Office.PlenoExcel
 {
-	[TestMethod]
-	public void Exemplo_De_Como_Gerar_Uma_Planilha_Excel()
+	[TestClass]
+	public class Testes
 	{
-		var arquivoExcel = new FileInfo(@"C:\Temp\PlenoExcel.xlsx");
-		var plenoExcel = new PlenoExcel(arquivoExcel, Modo.Padrao);
+		[TestMethod]
+		public void Exemplo_De_Como_Gerar_Uma_Planilha_Excel()
+		{
+			var arquivoExcel = new FileInfo(@"C:\Temp\PlenoExcel.xlsx");
+			var plenoExcel = new PlenoExcel(arquivoExcel, Modo.Padrao);
 
-		var plan1 = plenoExcel["Plan1"];
+			var plan1 = plenoExcel["Plan1"];
 
-		plan1.Escrever("A", 1, "Número 1", Style.Header);
-		plan1.Escrever("B", 1, "Número 2", Style.Header);
-		plan1.Escrever("C", 1, "Soma", Style.Header);
+			plan1.Escrever("A", 1, "Número 1", Style.Header);
+			plan1.Escrever("B", 1, "Número 2", Style.Header);
+			plan1.Escrever("C", 1, "Soma", Style.Header);
 
-		plan1.Escrever("A", 2, 6, Style.Geral);
-		plan1.Escrever("B", 2, 4, Style.Geral);
-		plan1.Escrever("C", 2, "=SUM(A2:B2)", Style.Geral);
+			plan1.Escrever("A", 2, 6, Style.Geral);
+			plan1.Escrever("B", 2, 4, Style.Geral);
+			plan1.Escrever("C", 2, "=SUM(A2:B2)", Style.Geral);
 
-		plenoExcel.Salvar();
-		plenoExcel.Fechar();
-	}
+			plenoExcel.Salvar();
+			plenoExcel.Fechar();
+		}
 
-	[TestMethod] 
-	public void Exemplo_De_Como_Gerar_Uma_Planilha_Excel_A_Partir_De_Uma_Lista_De_DTOs()
-	{
-		var arquivoExcel = new FileInfo(@"C:\Temp\PlenoExcel.xlsx");
-		var plenoExcel = new PlenoExcel(arquivoExcel, Modo.Padrao | Modo.ApagarSeExistir);
-		plenoExcel.Exportar(listaDTO);
-		plenoExcel.Fechar();
+		[TestMethod] 
+		public void Exemplo_De_Como_Gerar_Uma_Planilha_Excel_A_Partir_De_Uma_Lista_De_DTOs()
+		{
+			var arquivoExcel = new FileInfo(@"C:\Temp\PlenoExcel.xlsx");
+			var plenoExcel = new PlenoExcel(arquivoExcel, Modo.Padrao | Modo.ApagarSeExistir);
+			plenoExcel.Exportar(listaDTO);
+			plenoExcel.Fechar();
+		}
 	}
 }
 ]]>
