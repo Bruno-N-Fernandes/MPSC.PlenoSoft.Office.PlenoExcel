@@ -4,5 +4,9 @@
 
 /.vs
 /Bin
-/C#/obj
+/obj
 /packages
+/obj/Debug
+/MPSC.PlenoSoft.Office.Testes.Unidade/bin/Debug
+/MPSC.PlenoSoft.Office.Testes.Unidade/obj/Debug
+/MPSC.PlenoSoft.Office/obj/Debug
