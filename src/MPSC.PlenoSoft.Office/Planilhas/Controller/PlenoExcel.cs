@@ -139,7 +139,7 @@ namespace MPSC.PlenoSoft.Office.Planilhas.Controller
 			var worksheetPart = wbP.AddNewPart<WorksheetPart>();
 			worksheetPart.Worksheet = new Worksheet(Coluna.Dimensionar(tamanhos), sheetData);
 			worksheetPart.Worksheet.Save();
-			wbP.Workbook.Sheets.Append(new Sheet { Name = nomeDaPlanilha, SheetId = (UInt32)wbP.GetPartsCountOfType<WorksheetPart>(), Id = wbP.GetIdOfPart(worksheetPart) });
+			wbP.Workbook.Sheets.Append(new Sheet { Name = nomeDaPlanilha, SheetId = (UInt32)wbP.GetPartsOfType<WorksheetPart>().Count(), Id = wbP.GetIdOfPart(worksheetPart) });
 			return new Planilha(this, _styles, sheetData);
 		}
 
@@ -180,32 +180,59 @@ namespace MPSC.PlenoSoft.Office.Planilhas.Controller
 				GC.Collect();
 			}
 		}
+		public static Type GetTypeOfItems<TCollection>(TCollection collection, out IEnumerable iEnumerable)
+		{
+			iEnumerable = ((collection as IEnumerable) ?? new[] { collection });
+			return iEnumerable?.GetType()?.GetGenericArguments()?.FirstOrDefault()
+				?? iEnumerable?.OfType<Object>()?.FirstOrDefault()?.GetType()
+				?? typeof(TCollection);
+		}
 
 		public void Exportar<TClass>(TClass dto, IEnumerable<PlenoMapa> mapeamento = null)
 		{
-			var campos = Cabecalho.ObterCabecalhos(dto.GetType(), mapeamento);
-			foreach (var campo in campos)
+			if (dto is IEnumerable lista)
+				ExportarDados(lista, mapeamento, null, false);
+			else
 			{
-				var property = campo.PropertyInfo;
-				var value = property.GetValue(dto, null);
-				if (value != null)
+				var campos = Cabecalho.ObterCabecalhos(dto.GetType(), mapeamento);
+				foreach (var campo in campos)
 				{
-					var lista = value as IEnumerable ?? new[] { value };
-					var planilha = this[campo.Mapeamento.Titulo];
-
-					if (lista.OfType<Object>().Any())
-					{
-						if (property.PropertyType.IsPrimitive)
-							planilha.AdicionarDados(lista.OfType<Object>().Select(i => new Interno(i)), typeof(Interno));
-						else
-						{
-							var tipo = property.PropertyType.IsGenericType ? property.PropertyType.GetGenericArguments()[0] : value.GetType();
-							planilha.AdicionarDados(lista, tipo, mapeamento);
-						}
-					}
+					var property = campo.PropertyInfo;
+					var value = GetValue(dto, property);
+					ExportarDados(value, mapeamento, campo.Mapeamento.Titulo, property.PropertyType.IsPrimitive);
 				}
 			}
 			Salvar();
+		}
+
+		private void ExportarDados(object value, IEnumerable<PlenoMapa> mapeamento, string planName, bool isPrimitive)
+		{
+			if (value != null)
+			{
+				var tipo = GetTypeOfItems(value, out var lista);
+				var planilha = this[planName ?? tipo.Name];
+
+				if (lista.OfType<Object>().Any())
+				{
+					if (isPrimitive)
+						planilha.AdicionarDados(lista.OfType<Object>().Select(i => new Interno(i)), typeof(Interno));
+					else
+						planilha.AdicionarDados(lista, tipo, mapeamento);
+				}
+			}
+		}
+
+		private object GetValue<TClass>(TClass dto, PropertyInfo property)
+		{
+			try
+			{
+				return property.GetValue(dto, null);
+			}
+			catch (Exception)
+			{
+				var _ = GetTypeOfItems(dto, out var lista);
+				return lista;
+			}
 		}
 
 		public class Interno

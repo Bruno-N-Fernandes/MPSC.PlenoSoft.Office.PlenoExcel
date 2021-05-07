@@ -14,17 +14,17 @@ using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Pleno Excel @ Mercado Pleno Soluções em Computação")]
 [assembly: AssemblyDescription("Leitor e Gerador de Planilhas do Excel.")]
-[assembly: AssemblyCompany("Mercado Pleno Soluções em Computação")]
+[assembly: AssemblyCompany("Mercado Pleno Soluções em Tecnologia da Informação")]
 [assembly: AssemblyProduct("MPSC.PlenoSoft.Office.dll")]
-[assembly: AssemblyCopyright("Copyright © Mercado Pleno 2018")]
+[assembly: AssemblyCopyright("Copyright © Mercado Pleno 2021")]
 [assembly: AssemblyTrademark("software@mercadopleno.com.br ™")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
 [assembly: Guid("7539D6F3-9829-4D41-9D2D-1DAD24A5C63A")]
 
-[assembly: AssemblyVersion("1.0.0.116")]
-[assembly: AssemblyFileVersion("23.05.12.685")]
-[assembly: AssemblyInformationalVersion("1.0.2018.0426")]
+[assembly: AssemblyVersion("1.0.0.117")]
+[assembly: AssemblyFileVersion("08.59.12.346")]
+[assembly: AssemblyInformationalVersion("1.0.2021.0507")]
 
 
 public class VersaoDoAssembly

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MPSC.PlenoSoft.Office.Planilhas.Controller;
 using MPSC.PlenoSoft.Office.Planilhas.Integracao;
@@ -12,6 +14,61 @@ namespace MPSC.PlenoSoft.Office.Testes.Unidade
 	public class TestandoGeradorDePlanilha
 	{
 		private static readonly String cRoot = File.Exists(@"C:\Temp\") ? @"C:\Temp" : Path.GetTempPath();
+
+		[TestMethod]
+		public void Quando_Converte0()
+		{
+			var leads = new List<Lead>();
+			for (int i = 0; i < 10; i++)
+			{
+				var lead = ObterLead(i + 1);
+				leads.Add(lead);
+			}
+
+			var arquivo1 = new FileInfo(cRoot + @"\OfficeDTO.xlsx");
+			var plenoExcel1 = new PlenoExcel(arquivo1, Modo.Padrao | Modo.ApagarSeExistir);
+			plenoExcel1.Exportar(leads);
+			plenoExcel1.Fechar();
+		}
+
+		private static Lead ObterLead(int i)
+		{
+			return new Lead
+			{
+				bMarketinCommunication = i % 2 == 0,
+				dPredictedAmount = 2.85M / i,
+				dtCreatedDate = DateTime.Today.AddDays(-i * 2),
+				dtUpdatedDate = DateTime.Today.AddDays(-i),
+				iLeadId = i,
+				iLeadSourceId = i * 2,
+				iLeadStatus = i % 5,
+				iOwnerId = i * 4 - 3,
+				iServiceTechnicianId = i % 5 - 2,
+				nvchAreaCode = string.Join("", Enumerable.Range(1, i * 7 % 29 + 4).Select(j => (char)(j + 64))),
+				nvchAreaDesc = string.Join("", Enumerable.Range(1, i * 7 % 28 + 5).Select(j => (char)(j + 64))),
+				nvchContactName = string.Join("", Enumerable.Range(1, i * 7 % 27 + 6).Select(j => (char)(j + 64))),
+				nvchCreatedBy = string.Join("", Enumerable.Range(1, i * 7 % 26 + 7).Select(j => (char)(j + 64))),
+				nvchCustomerNo_ = string.Join("", Enumerable.Range(1, i * 7 % 25 + 8).Select(j => (char)(j + 64))),
+				nvchEmail = string.Join("", Enumerable.Range(1, i * 7 % 24 + 9).Select(j => (char)(j + 64))),
+				nvchLeadServices = string.Join("", Enumerable.Range(1, i * 7 % 23 + 0).Select(j => (char)(j + 64))),
+				nvchLeadSourceType = string.Join("", Enumerable.Range(1, i * 7 % 22 + 1).Select(j => (char)(j + 64))),
+				nvchLeadStatus = string.Join("", Enumerable.Range(1, i * 7 % 21 + 2).Select(j => (char)(j + 64))),
+				nvchLeadTypeCode = string.Join("", Enumerable.Range(1, i * 7 % 20 + 3).Select(j => (char)(j + 64))),
+				nvchName = string.Join("", Enumerable.Range(1, i * 7 % 19 + 4).Select(j => (char)(j + 64))),
+				nvchOwnerName = string.Join("", Enumerable.Range(1, i * 7 % 18 + 5).Select(j => (char)(j + 64))),
+				nvchPhone = string.Join("", Enumerable.Range(1, i * 7 % 17 + 6).Select(j => (char)(j + 64))),
+				nvchReason = string.Join("", Enumerable.Range(1, i * 7 % 19 + 7).Select(j => (char)(j + 64))),
+				nvchServiceTechnicianName = string.Join("", Enumerable.Range(1, i * 7 % 7 + 8).Select(j => (char)(j + 64))),
+				nvchUpdatedBy = string.Join("", Enumerable.Range(1, i * 7 % 15 + 9).Select(j => (char)(j + 64))),
+				nvchUser1 = string.Join("", Enumerable.Range(1, i * 7 % 14 + 0).Select(j => (char)(j + 64))),
+				nvchUser2 = string.Join("", Enumerable.Range(1, i * 7 % 13 + 1).Select(j => (char)(j + 64))),
+				nvchUser3 = string.Join("", Enumerable.Range(1, i * 7 % 12 + 2).Select(j => (char)(j + 64))),
+				nvchUser4 = string.Join("", Enumerable.Range(1, i * 7 % 11 + 3).Select(j => (char)(j + 64))),
+				nvchUser5 = string.Join("", Enumerable.Range(1, i * 7 % 10 + 4).Select(j => (char)(j + 64))),
+				nvchVATNo = string.Join("", Enumerable.Range(1, i * 7 % 9 + 5).Select(j => (char)(j + 64))),
+				nvchZipCode = string.Join("", Enumerable.Range(1, i * 7 % 8 + 6).Select(j => (char)(j + 64)))
+			};
+		}
 
 		[TestMethod]
 		public void Quando_Converte()
@@ -175,4 +232,121 @@ namespace MPSC.PlenoSoft.Office.Testes.Unidade
 			HasCompleted = hasCompleted;
 		}
 	}
+
+	[Serializable]
+	public class Lead
+	{
+		[Display(Name = "ID")]
+		public int iLeadId { get; set; }
+		[Required]
+		[Display(Name = "Type")]
+		public string nvchLeadTypeCode { get; set; }
+		public string nvchCustomerNo_ { get; set; }
+		[Required]
+		[StringLength(50, ErrorMessage = "VAT should be less characters in length.")]
+		[Display(Name = "VAT")]
+		public string nvchVATNo { get; set; }
+		[Required]
+		[Display(Name = "Name")]
+		[StringLength(50, ErrorMessage = "Name should be less characters in length.")]
+		public string nvchName { get; set; }
+		[Required]
+		[StringLength(20, ErrorMessage = "Phone should be less characters in length.")]
+		[Display(Name = "Phone")]
+		public string nvchPhone { get; set; }
+		[Required]
+		[Display(Name = "Zip Code")]
+		[StringLength(10, ErrorMessage = "Zip Code should be less characters in length.")]
+		public string nvchZipCode { get; set; }
+		[Required]
+		[Display(Name = "Contact Name")]
+		[StringLength(50, ErrorMessage = "Contact name should be less characters in length.")]
+		public string nvchContactName { get; set; }
+		[Required]
+		[Display(Name = "E-mail")]
+		[RegularExpression(@"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$", ErrorMessage = "Email is not valid.")]
+		[StringLength(50, ErrorMessage = "E-mail should be less characters in length.")]
+		public string nvchEmail { get; set; }
+		[Required]
+		[Display(Name = "Marketing Communication")]
+		public bool bMarketinCommunication { get; set; }
+		[Required]
+		[Display(Name = "Area Code")]
+		public string nvchAreaCode { get; set; }
+		[Display(Name = "Area")]
+		public string nvchAreaDesc { get; set; }
+		[Required]
+		[Display(Name = "Reason")]
+		[StringLength(1000, ErrorMessage = "Reason should be less characters in length.")]
+		public string nvchReason { get; set; }
+		[Required]
+		[Display(Name = "Source")]
+		public int iLeadSourceId { get; set; }
+		[Required]
+		[Display(Name = "Source Type")]
+		public string nvchLeadSourceType { get; set; }
+		public Nullable<int> iServiceTechnicianId { get; set; }
+		[Display(Name = "Technician")]
+		public string nvchServiceTechnicianName { get; set; }
+		[Required]
+		[Display(Name = "Owner")]
+		public int iOwnerId { get; set; }
+		[Display(Name = "Owner")]
+		public string nvchOwnerName { get; set; }
+		public string nvchCreatedBy { get; set; }
+		public System.DateTime dtCreatedDate { get; set; }
+		public string nvchUpdatedBy { get; set; }
+		public Nullable<System.DateTime> dtUpdatedDate { get; set; }
+		public int iLeadStatus { get; set; }
+		[Display(Name = "Status")]
+		public string nvchLeadStatus { get; set; }
+		[Required]
+		[Display(Name = "List Services")]
+		public string nvchLeadServices { get; set; }
+		public decimal? dPredictedAmount { get; set; }
+		//public List<LeadService> lstLeadServices { get; set; }
+		[Required]
+		[Display(Name = "Address")]
+		public string nvchUser1 { get; set; }
+		public string nvchUser2 { get; set; }
+		public string nvchUser3 { get; set; }
+		public string nvchUser4 { get; set; }
+		public string nvchUser5 { get; set; }
+
+		public Lead()
+		{
+			iLeadId = 0;
+			iOwnerId = 0;
+			iLeadSourceId = 0;
+			iLeadStatus = 1;
+			nvchLeadTypeCode = string.Empty;
+			nvchAreaCode = string.Empty;
+			nvchAreaDesc = string.Empty;
+			nvchContactName = string.Empty;
+			nvchCreatedBy = string.Empty;
+			nvchCustomerNo_ = string.Empty;
+			nvchEmail = string.Empty;
+			nvchName = string.Empty;
+			nvchPhone = string.Empty;
+			nvchReason = string.Empty;
+			nvchUpdatedBy = string.Empty;
+			nvchVATNo = string.Empty;
+			nvchZipCode = string.Empty;
+			nvchLeadServices = string.Empty;
+			dtCreatedDate = DateTime.Now;
+			dtUpdatedDate = DateTime.Now;
+			dPredictedAmount = 0;
+
+			nvchUser1 = string.Empty;
+			nvchUser2 = string.Empty;
+			nvchUser3 = string.Empty;
+			nvchUser4 = string.Empty;
+			nvchUser5 = string.Empty;
+
+			bMarketinCommunication = false;
+			//lstLeadServices = new List<LeadService>();
+		}
+	}
+
+
 }
