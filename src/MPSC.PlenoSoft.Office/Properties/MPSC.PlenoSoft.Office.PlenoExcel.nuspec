@@ -3,7 +3,7 @@
     <metadata minClientVersion="3.5.0">
         <id>MPSC.PlenoSoft.Office.PlenoExcel</id>
         <version>$version$</version>
-        <title>Pleno Excel @ Mercado Pleno Soluções em Computação</title>
+        <title>Pleno Excel @ Mercado Pleno Soluções em Tecnologia da Informação</title>
         <authors>Bruno N. Fernandes</authors>
         <owners>software@mercadopleno.com.br</owners>
         <licenseUrl>http://www.mercadopleno.com.br</licenseUrl>
@@ -90,7 +90,7 @@ namespace MPSC.PlenoSoft.Office.Testes.Unidade
 			2017/08/06 - 1.0.0.109 -> Exportação de Listas de um DTO como sheets da planilha;
 			2017/08/05 - 1.0.0.108 -> Versão Inicial do façade para o DocumentFormat.OpenXML muito simples de utilizar;
 		</releaseNotes>
-        <copyright>Mercado Pleno Soluções em Tecnologia da informação</copyright>
+        <copyright>Mercado Pleno Soluções em Tecnologia da Informação @ 2021</copyright>
         <language>pt-BR</language>
         <tags>Document Format Open Xml Office Excel Planilha Pleno Soft DocumentFormat OpenXml Exportar</tags>
         <dependencies>
